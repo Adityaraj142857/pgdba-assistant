@@ -1,0 +1,23 @@
+# Core
+fastapi
+uvicorn
+python-dotenv
+pydantic
+
+# LangChain Ecosystem
+langchain
+langchain-community
+langchain-core
+langchain-google-genai
+langchain-huggingface  # <-- NEW: For HuggingFace Embeddings
+
+
+
+# Vector DB & AI
+faiss-cpu
+sentence-transformers # <-- NEW: The engine for local embeddings
+google-generativeai
+
+# Utilities
+beautifulsoup4
+requests

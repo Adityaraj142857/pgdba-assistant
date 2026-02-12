@@ -1,0 +1,22 @@
+2026-02-11 22:27:33,038 - INFO - Starting scrape for 7 URLs...
+2026-02-11 22:27:33,038 - INFO - Scraping: https://pgdba.ml
+2026-02-11 22:27:36,120 - INFO - Scraping: https://aspirants.pgdba.ml
+2026-02-11 22:27:39,098 - INFO - Scraping: https://blog.pgdba.ml
+2026-02-11 22:27:43,707 - INFO - Scraping: https://magazine.pgdba.ml
+2026-02-11 22:27:48,106 - WARNING - Attempt 1/3 failed for https://magazine.pgdba.ml: 410 Client Error: Gone for url: https://magazine.pgdba.ml/
+2026-02-11 22:27:52,940 - WARNING - Attempt 2/3 failed for https://magazine.pgdba.ml: 410 Client Error: Gone for url: https://magazine.pgdba.ml/
+2026-02-11 22:27:57,125 - WARNING - Attempt 3/3 failed for https://magazine.pgdba.ml: 410 Client Error: Gone for url: https://magazine.pgdba.ml/
+2026-02-11 22:27:59,130 - ERROR - Failed to fetch https://magazine.pgdba.ml after 3 attempts.
+2026-02-11 22:27:59,133 - INFO - Scraping: https://www.iimcal.ac.in/programs/pgdba
+2026-02-11 22:28:03,139 - INFO - Scraping: http://www.pgdba.iitkgp.ac.in/
+2026-02-11 22:28:06,236 - WARNING - Attempt 1/3 failed for http://www.pgdba.iitkgp.ac.in/: HTTPConnectionPool(host='www.pgdba.iitkgp.ac.in', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPConnection(host='www.pgdba.iitkgp.ac.in', port=80): Failed to resolve 'www.pgdba.iitkgp.ac.in' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-11 22:28:11,163 - WARNING - Attempt 2/3 failed for http://www.pgdba.iitkgp.ac.in/: HTTPConnectionPool(host='www.pgdba.iitkgp.ac.in', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPConnection(host='www.pgdba.iitkgp.ac.in', port=80): Failed to resolve 'www.pgdba.iitkgp.ac.in' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-11 22:28:15,688 - WARNING - Attempt 3/3 failed for http://www.pgdba.iitkgp.ac.in/: HTTPConnectionPool(host='www.pgdba.iitkgp.ac.in', port=80): Max retries exceeded with url: / (Caused by NameResolutionError("HTTPConnection(host='www.pgdba.iitkgp.ac.in', port=80): Failed to resolve 'www.pgdba.iitkgp.ac.in' ([Errno 8] nodename nor servname provided, or not known)"))
+2026-02-11 22:28:17,694 - ERROR - Failed to fetch http://www.pgdba.iitkgp.ac.in/ after 3 attempts.
+2026-02-11 22:28:17,694 - INFO - Scraping: https://www.isical.ac.in/~pgdba/
+2026-02-11 22:28:51,779 - WARNING - Attempt 1/3 failed for https://www.isical.ac.in/~pgdba/: HTTPSConnectionPool(host='www.isical.ac.in', port=443): Max retries exceeded with url: /~pgdba/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.isical.ac.in', port=443) at 0x10261e350>, 'Connection to www.isical.ac.in timed out. (connect timeout=15)'))
+2026-02-11 22:29:27,729 - WARNING - Attempt 2/3 failed for https://www.isical.ac.in/~pgdba/: HTTPSConnectionPool(host='www.isical.ac.in', port=443): Max retries exceeded with url: /~pgdba/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.isical.ac.in', port=443) at 0x10261ee90>, 'Connection to www.isical.ac.in timed out. (connect timeout=15)'))
+2026-02-11 22:30:02,087 - WARNING - Attempt 3/3 failed for https://www.isical.ac.in/~pgdba/: HTTPSConnectionPool(host='www.isical.ac.in', port=443): Max retries exceeded with url: /~pgdba/ (Caused by ConnectTimeoutError(<HTTPSConnection(host='www.isical.ac.in', port=443) at 0x10261f110>, 'Connection to www.isical.ac.in timed out. (connect timeout=15)'))
+2026-02-11 22:30:04,087 - ERROR - Failed to fetch https://www.isical.ac.in/~pgdba/ after 3 attempts.
+2026-02-11 22:30:04,088 - INFO - Scraping complete. Successfully scraped 4/7 pages.
+2026-02-11 22:30:04,088 - INFO - Data saved to website_data.txt

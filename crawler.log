@@ -1,0 +1,73 @@
+2026-02-11 22:36:05,153 - INFO - Crawling (1/50): https://aspirants.pgdba.ml/
+2026-02-11 22:36:08,363 - INFO - Found 2 valid links on page.
+2026-02-11 22:36:08,363 - INFO - Crawling (2/50): https://aspirants.pgdba.ml/2017/12/12/what-is-pgdba-2/
+2026-02-11 22:36:11,144 - INFO - Found 5 valid links on page.
+2026-02-11 22:36:11,144 - INFO - Crawling (3/50): https://aspirants.pgdba.ml/category/chronicles/
+2026-02-11 22:36:13,855 - INFO - Found 6 valid links on page.
+2026-02-11 22:36:13,855 - INFO - Crawling (4/50): https://aspirants.pgdba.ml/2020/01/10/the-mission-of-pgdba/
+2026-02-11 22:36:17,485 - INFO - Found 13 valid links on page.
+2026-02-11 22:36:17,485 - INFO - Crawling (5/50): https://aspirants.pgdba.ml/category/articles/
+2026-02-11 22:36:19,958 - INFO - Found 5 valid links on page.
+2026-02-11 22:36:19,959 - INFO - Crawling (6/50): https://aspirants.pgdba.ml/category/general/
+2026-02-11 22:36:21,868 - INFO - Found 4 valid links on page.
+2026-02-11 22:36:21,868 - INFO - Crawling (7/50): https://aspirants.pgdba.ml/2016/09/07/joka-library-to-paris-a-data-science-crusade/
+2026-02-11 22:36:23,993 - INFO - Found 6 valid links on page.
+2026-02-11 22:36:23,993 - INFO - Crawling (8/50): https://aspirants.pgdba.ml/2016/11/07/foreign-internships-ambassadors-of-pgdba/
+2026-02-11 22:36:27,165 - INFO - Found 4 valid links on page.
+2026-02-11 22:36:27,165 - INFO - Crawling (9/50): https://aspirants.pgdba.ml/2016/12/29/a-semester-in-class-with-souravda/
+2026-02-11 22:36:29,916 - INFO - Found 6 valid links on page.
+2026-02-11 22:36:29,917 - INFO - Crawling (10/50): https://aspirants.pgdba.ml/2015/12/18/pgdba-chronicles-first-semester/
+2026-02-11 22:36:33,457 - INFO - Found 9 valid links on page.
+2026-02-11 22:36:33,458 - INFO - Crawling (11/50): https://aspirants.pgdba.ml/2017/02/01/wiser-by-a-semester-of-statistics/
+2026-02-11 22:36:35,928 - INFO - Found 6 valid links on page.
+2026-02-11 22:36:35,928 - INFO - Crawling (12/50): https://aspirants.pgdba.ml/tag/student-life/
+2026-02-11 22:36:38,910 - INFO - Found 8 valid links on page.
+2026-02-11 22:36:38,910 - INFO - Crawling (13/50): https://aspirants.pgdba.ml/tag/analytics/
+2026-02-11 22:36:41,617 - INFO - Found 12 valid links on page.
+2026-02-11 22:36:41,617 - INFO - Crawling (14/50): https://aspirants.pgdba.ml/category/about-us/
+2026-02-11 22:36:44,093 - INFO - Found 2 valid links on page.
+2026-02-11 22:36:44,094 - INFO - Crawling (15/50): https://aspirants.pgdba.ml/tag/pgdba/
+2026-02-11 22:36:47,516 - INFO - Found 12 valid links on page.
+2026-02-11 22:36:47,516 - INFO - Crawling (16/50): https://aspirants.pgdba.ml/tag/data-sciences/
+2026-02-11 22:36:49,901 - INFO - Found 9 valid links on page.
+2026-02-11 22:36:49,901 - INFO - Crawling (17/50): https://aspirants.pgdba.ml/tag/iit-kgp/
+2026-02-11 22:36:53,355 - INFO - Found 10 valid links on page.
+2026-02-11 22:36:53,356 - INFO - Crawling (18/50): https://aspirants.pgdba.ml/tag/isi/
+2026-02-11 22:36:55,805 - INFO - Found 12 valid links on page.
+2026-02-11 22:36:55,805 - INFO - Crawling (19/50): https://aspirants.pgdba.ml/tag/iim-calcutta/
+2026-02-11 22:36:58,414 - INFO - Found 11 valid links on page.
+2026-02-11 22:36:58,414 - INFO - Crawling (20/50): https://aspirants.pgdba.ml/2016/02/22/facing-the-music-pgdba-interview-experiences-part-1/
+2026-02-11 22:37:01,210 - INFO - Found 11 valid links on page.
+2026-02-11 22:37:01,210 - INFO - Crawling (21/50): https://aspirants.pgdba.ml/2016/03/03/facing-the-music-pgdba-interview-experiences-part-2/
+2026-02-11 22:37:04,160 - INFO - Found 15 valid links on page.
+2026-02-11 22:37:04,161 - INFO - Crawling (22/50): https://aspirants.pgdba.ml/2023/11/16/pgdba-interview-experiences-2023-25/
+2026-02-11 22:37:07,311 - INFO - Found 13 valid links on page.
+2026-02-11 22:37:07,311 - INFO - Crawling (23/50): https://aspirants.pgdba.ml/2023/05/01/pgdba-interview-experiences-2022-24/
+2026-02-11 22:37:10,861 - INFO - Found 12 valid links on page.
+2026-02-11 22:37:10,861 - INFO - Crawling (24/50): https://aspirants.pgdba.ml/category/experiences/
+2026-02-11 22:37:13,507 - INFO - Found 7 valid links on page.
+2026-02-11 22:37:13,507 - INFO - Crawling (25/50): https://aspirants.pgdba.ml/tag/experience/
+2026-02-11 22:37:15,768 - INFO - Found 9 valid links on page.
+2026-02-11 22:37:15,769 - INFO - Crawling (26/50): https://aspirants.pgdba.ml/category/technical/
+2026-02-11 22:37:18,510 - INFO - Found 2 valid links on page.
+2026-02-11 22:37:18,511 - INFO - Crawling (27/50): https://aspirants.pgdba.ml/2015/12/03/what-is-pgdba/
+2026-02-11 22:37:20,661 - INFO - Found 9 valid links on page.
+2026-02-11 22:37:20,662 - INFO - Crawling (28/50): https://aspirants.pgdba.ml/tag/students/
+2026-02-11 22:37:24,190 - INFO - Found 9 valid links on page.
+2026-02-11 22:37:24,190 - INFO - Crawling (29/50): https://aspirants.pgdba.ml/tag/interview/
+2026-02-11 22:37:26,120 - INFO - Found 7 valid links on page.
+2026-02-11 22:37:26,121 - INFO - Crawling (30/50): https://aspirants.pgdba.ml/tag/pi/
+2026-02-11 22:37:28,513 - INFO - Found 2 valid links on page.
+2026-02-11 22:37:28,514 - INFO - Crawling (31/50): https://aspirants.pgdba.ml/tag/isi-kolkata/
+2026-02-11 22:37:30,644 - INFO - Found 2 valid links on page.
+2026-02-11 22:37:30,645 - INFO - Crawling (32/50): https://aspirants.pgdba.ml/2019/12/28/interview-experience-2019-21-part1/
+2026-02-11 22:37:34,461 - INFO - Found 4 valid links on page.
+2026-02-11 22:37:34,461 - INFO - Crawling (33/50): https://aspirants.pgdba.ml/2018/03/11/interview-experiences-batch-2017-19/
+2026-02-11 22:37:37,060 - INFO - Found 4 valid links on page.
+2026-02-11 22:37:37,061 - INFO - Crawling (34/50): https://aspirants.pgdba.ml/2017/03/06/pgdba-2016-18-interview-experiences-part-2/
+2026-02-11 22:37:40,067 - INFO - Found 4 valid links on page.
+2026-02-11 22:37:40,068 - INFO - Crawling (35/50): https://aspirants.pgdba.ml/2019/02/28/pgdba-2018-20-interview-experiences/
+2026-02-11 22:37:42,204 - INFO - Found 4 valid links on page.
+2026-02-11 22:37:42,204 - INFO - Crawling (36/50): https://aspirants.pgdba.ml/tag/intro/
+2026-02-11 22:37:44,740 - INFO - Found 2 valid links on page.
+2026-02-11 22:37:44,741 - INFO - Crawler finished. Scraped 36 pages.
