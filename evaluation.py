@@ -13,7 +13,7 @@ try:
     from datasets import Dataset
     from ragas import evaluate as ragas_evaluate
     from ragas.metrics import faithfulness, answer_relevancy
-    from ragas.run_config import RunConfig # Import config to control speed
+    from ragas.run_config import RunConfig  # Import config to control speed
 
     from langchain_google_genai import ChatGoogleGenerativeAI
     from langchain_community.vectorstores import FAISS
@@ -33,6 +33,8 @@ except ImportError:
         EMBEDDING_MODEL = "BAAI/bge-large-en-v1.5"
         LLM_MODEL = "gemini-1.5-flash"
         TEMPERATURE = 0.3
+
+
     config = Config()
 
 load_dotenv()
@@ -68,9 +70,10 @@ llm = ChatGoogleGenerativeAI(
     model=config.LLM_MODEL,
     temperature=config.TEMPERATURE,
     google_api_key=config.GOOGLE_API_KEY,
-    timeout=60, # Increased timeout
+    timeout=60,  # Increased timeout
     max_retries=3
 )
+
 
 # --- 3. MANUAL RAG FUNCTION ---
 def local_get_response(query: str):
@@ -93,11 +96,12 @@ QUESTION:
 ANSWER:
 """
     response_msg = llm.invoke(prompt)
-    
+
     return {
         "result": response_msg.content,
         "source_documents": docs
     }
+
 
 # --- 4. EVALUATION LOGIC ---
 test_data = [
@@ -123,6 +127,7 @@ test_data = [
     }
 ]
 
+
 def calculate_bleu(answers, ground_truths):
     try:
         bleu = evaluate.load("bleu")
@@ -138,9 +143,10 @@ def calculate_bleu(answers, ground_truths):
         print(f"⚠️ BLEU Error: {e}")
         return [0.0] * len(answers)
 
+
 def run_evaluation():
     print("🚀 Starting RAG Pipeline...")
-    
+
     questions, answers, contexts, ground_truths = [], [], [], []
 
     # 1. Generate Answers
@@ -149,7 +155,7 @@ def run_evaluation():
         print(f"   Processing: {q}")
         try:
             res = local_get_response(q)
-            
+
             questions.append(q)
             answers.append(res["result"])
             # Ragas needs contexts as a list of strings
@@ -179,14 +185,14 @@ def run_evaluation():
     try:
         # Only using 2 essential metrics to save time/quota
         ragas_metrics = [faithfulness, answer_relevancy]
-        
+
         # Convert DF to Dataset for Ragas
         dataset = Dataset.from_pandas(df)
-        
+
         # Throttled Configuration to prevent Timeouts
         run_config = RunConfig(
             max_workers=1,  # 🛑 CRITICAL: Process 1 by 1 to avoid rate limits
-            timeout=120     # Give each request more time
+            timeout=120  # Give each request more time
         )
 
         results = ragas_evaluate(
@@ -196,7 +202,7 @@ def run_evaluation():
             embeddings=embeddings,
             run_config=run_config
         )
-        
+
         # Merge Ragas results back into DataFrame
         ragas_df = results.to_pandas()
         # We only need the metric columns, merge on index or common columns
@@ -204,7 +210,7 @@ def run_evaluation():
             df['faithfulness'] = ragas_df['faithfulness']
         if 'answer_relevancy' in ragas_df.columns:
             df['answer_relevancy'] = ragas_df['answer_relevancy']
-            
+
     except Exception as e:
         print(f"❌ Ragas Failed (Skipping AI metrics): {e}")
         # Proceed with just BLEU results
@@ -212,10 +218,11 @@ def run_evaluation():
     # 5. Save Results
     df.to_csv("evaluation_results.csv", index=False)
     print(f"\n✅ Done! Results saved to evaluation_results.csv")
-    
+
     # Print Average Scores
     print("\n--- 📊 Average Scores ---")
     print(df.mean(numeric_only=True))
+
 
 if __name__ == "__main__":
     run_evaluation()
