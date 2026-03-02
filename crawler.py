@@ -84,7 +84,7 @@ def extract_clean_text(html):
     # and returns clean text, preserving table data.
     text = trafilatura.extract(
         html, 
-        include_links=False, 
+        include_links=True, 
         include_images=False, 
         include_tables=True,
         no_fallback=False
