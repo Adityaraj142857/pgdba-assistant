@@ -8,6 +8,7 @@ import requests
 from bs4 import BeautifulSoup
 from tqdm import tqdm
 from urllib.parse import urlparse
+import trafilatura
 
 # -----------------------------
 # CONFIG
@@ -75,33 +76,23 @@ def is_valid_url(url):
     return True
 
 
-# -----------------------------
-# TEXT CLEANING (🔥 MASSIVELY IMPROVED)
-# -----------------------------
+
+
+# Replace your extract_clean_text function with this:
 def extract_clean_text(html):
-    soup = BeautifulSoup(html, "html.parser")
-
-    # 1. Annihilate noise tags completely
-    for tag in soup(["script", "style", "noscript", "header", "footer", "nav", "aside", "meta", "form"]):
-        tag.decompose()
-
-    # 2. Extract text specifically from content-bearing tags
-    content_tags = soup.find_all(['p', 'h1', 'h2', 'h3', 'h4', 'li', 'td'])
-
-    if content_tags:
-        text = " ".join([tag.get_text(separator=" ", strip=True) for tag in content_tags])
-    else:
-        # Fallback if the site uses weird formatting
-        text = soup.get_text(separator=" ")
-
-    # 3. Clean up whitespace
-    text = re.sub(r"\s+", " ", text).strip()
-
-    # 4. Remove very short pages (likely login screens or errors)
-    if len(text) < 400:
-        return None
-
-    return text
+    # Trafilatura automatically removes navbars, footers, and ads
+    # and returns clean text, preserving table data.
+    text = trafilatura.extract(
+        html, 
+        include_links=False, 
+        include_images=False, 
+        include_tables=True,
+        no_fallback=False
+    )
+    
+    if text and len(text) > 400:
+        return text
+    return None
 
 
 # -----------------------------
