@@ -51,7 +51,7 @@ ensemble_retriever = EnsembleRetriever(
 # This model grades the 30 chunks from Hybrid Search and picks the top 5
 cross_encoder = HuggingFaceCrossEncoder(
     model_name=config.RERANKER_MODEL, 
-    model_kwargs={'device': 'mps'}
+    model_kwargs={'device': config.COMPUTE_DEVICE}
 )
 compressor = CrossEncoderReranker(model=cross_encoder, top_n=5)
 compression_retriever = ContextualCompressionRetriever(
