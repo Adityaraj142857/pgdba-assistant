@@ -47,7 +47,7 @@ def ingest_data():
     print(f"🧠 Loading Embedding Model...")
     embeddings = HuggingFaceEmbeddings(
         model_name=config.EMBEDDING_MODEL,
-        model_kwargs={'device': 'mps'}, 
+        model_kwargs={'device': config.COMPUTE_DEVICE}, 
         encode_kwargs={'normalize_embeddings': True}
     )
 

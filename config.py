@@ -1,10 +1,11 @@
 import os
 from dotenv import load_dotenv
+import sys
 
 load_dotenv()
 
 GOOGLE_API_KEY = os.getenv("GOOGLE_API_KEY")
-
+COMPUTE_DEVICE = "mps" if sys.platform == "darwin" else "cpu"
 BASE_DIR = os.path.dirname(os.path.abspath(__file__))
 DATA_DIR = os.path.join(BASE_DIR, "data")
 os.makedirs(DATA_DIR, exist_ok=True)

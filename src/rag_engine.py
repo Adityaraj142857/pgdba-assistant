@@ -29,7 +29,7 @@ load_dotenv()
 # 1️⃣ Load Embeddings & FAISS (Semantic Search)
 embeddings = HuggingFaceEmbeddings(
     model_name=config.EMBEDDING_MODEL,
-    model_kwargs={'device': 'mps'}, # Hardware acceleration
+    model_kwargs={'device': config.COMPUTE_DEVICE}, # Hardware acceleration
     encode_kwargs={'normalize_embeddings': True}
 )
 vector_store = FAISS.load_local(config.VECTOR_DB_PATH, embeddings, allow_dangerous_deserialization=True)
