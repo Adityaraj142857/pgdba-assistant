@@ -1,0 +1,378 @@
+<!-- ===== PGDBA AI WIDGET START ===== -->
+<div id="pgdba-widget">
+
+    <style>
+    #pgdba-widget{
+    all:initial;
+    font-family:system-ui,-apple-system;
+    }
+    
+    #pgdba-widget *{
+    box-sizing:border-box;
+    font-family:inherit;
+    }
+    
+    /* Theme Variables */
+    #pgdba-widget{
+    --bg:#ffffff;
+    --glass:rgba(255,255,255,0.65);
+    --text:#111827;
+    --bot:#f1f5ff;
+    --user:linear-gradient(135deg,#6366f1,#8b5cf6);
+    --border:linear-gradient(270deg,#6366f1,#9333ea,#06b6d4,#6366f1);
+    }
+    
+    #pgdba-widget.dark{
+    --bg:#0f172a;
+    --glass:rgba(30,41,59,0.65);
+    --text:#f1f5f9;
+    --bot:#1e293b;
+    }
+    
+    /* Floating Button */
+    #pgdba-toggle{
+    position:fixed;
+    bottom:25px;
+    right:25px;
+    width:65px;
+    height:65px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    cursor:pointer;
+    box-shadow:0 10px 30px rgba(0,0,0,.25);
+    z-index:9999;
+    transition:.3s;
+    color:white;
+    font-size:24px;
+    }
+    
+    #pgdba-toggle:hover{transform:scale(1.1);}
+    
+    /* Container */
+    #pgdba-container{
+    position:fixed;
+    bottom:0;
+    right:0;
+    width:380px;
+    height:560px;
+    background:var(--glass);
+    backdrop-filter:blur(20px);
+    border-radius:20px 0 0 0;
+    box-shadow:-10px 0 40px rgba(0,0,0,.2);
+    transform:translateX(100%);
+    transition:transform .45s cubic-bezier(.22,1,.36,1);
+    display:flex;
+    flex-direction:column;
+    overflow:hidden;
+    z-index:9999;
+    color:var(--text);
+    }
+    
+    #pgdba-container.open{
+    transform:translateX(0);
+    }
+    
+    /* Animated Border */
+    #pgdba-container::before{
+    content:"";
+    position:absolute;
+    inset:0;
+    padding:2px;
+    border-radius:20px 0 0 0;
+    background:var(--border);
+    background-size:600% 600%;
+    animation:borderFlow 8s linear infinite;
+    -webkit-mask:
+    linear-gradient(#fff 0 0) content-box,
+    linear-gradient(#fff 0 0);
+    -webkit-mask-composite:xor;
+    mask-composite:exclude;
+    pointer-events:none;
+    }
+    
+    @keyframes borderFlow{
+    0%{background-position:0% 50%}
+    100%{background-position:100% 50%}
+    }
+    
+    /* Header */
+    #pgdba-header{
+    padding:15px;
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-weight:600;
+    }
+    
+    #pgdba-header button{
+    background:none;
+    border:none;
+    cursor:pointer;
+    font-size:18px;
+    }
+    
+    /* Robot */
+    #pgdba-robot{
+    width:70px;
+    margin:0 auto;
+    animation:breath 3s ease-in-out infinite;
+    }
+    
+    @keyframes breath{
+    0%,100%{transform:scale(1)}
+    50%{transform:scale(1.05)}
+    }
+    
+    .pgdba-head{
+    width:70px;
+    height:70px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    }
+    
+    .pgdba-eye{
+    width:10px;
+    height:10px;
+    background:white;
+    border-radius:50%;
+    margin:5px;
+    animation:blink 5s infinite;
+    }
+    
+    @keyframes blink{
+    0%,90%,100%{transform:scaleY(1)}
+    95%{transform:scaleY(.1)}
+    }
+    
+    .pgdba-body{
+    width:60px;
+    height:50px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#4f46e5,#7c3aed);
+    margin:5px auto;
+    }
+    
+    #pgdba-robot.thinking .pgdba-head{
+    box-shadow:0 0 20px #8b5cf6;
+    animation:spin 1s linear infinite;
+    }
+    
+    @keyframes spin{
+    0%{transform:rotate(0)}
+    100%{transform:rotate(360deg)}
+    }
+    
+    /* Messages */
+    #pgdba-messages{
+    flex:1;
+    padding:15px;
+    overflow-y:auto;
+    font-size:14px;
+    }
+    
+    .pgdba-msg{
+    padding:10px 14px;
+    border-radius:15px;
+    margin-bottom:10px;
+    max-width:85%;
+    animation:fadeIn .3s ease;
+    word-wrap:break-word;
+    }
+    
+    @keyframes fadeIn{
+    from{opacity:0;transform:translateY(10px)}
+    to{opacity:1;transform:translateY(0)}
+    }
+    
+    .pgdba-user{
+    background:var(--user);
+    color:white;
+    margin-left:auto;
+    }
+    
+    .pgdba-bot{
+    background:var(--bot);
+    }
+    
+    .pgdba-thinking::after{
+    content:"...";
+    animation:dots 1.5s infinite;
+    }
+    
+    @keyframes dots{
+    0%{content:"."}
+    33%{content:".."}
+    66%{content:"..."}
+    }
+    
+    /* Input */
+    #pgdba-input-area{
+    display:flex;
+    padding:10px;
+    gap:10px;
+    }
+    
+    #pgdba-input{
+    flex:1;
+    padding:10px;
+    border-radius:10px;
+    border:1px solid #ddd;
+    outline:none;
+    }
+    
+    #pgdba-send{
+    padding:10px 14px;
+    border:none;
+    border-radius:10px;
+    background:linear-gradient(135deg,#6366f1,#8b5cf6);
+    color:white;
+    cursor:pointer;
+    }
+    
+    /* Mobile Compact Mode */
+    @media(max-width:480px){
+    #pgdba-container{
+    width:100%;
+    height:100%;
+    border-radius:0;
+    }
+    #pgdba-toggle{
+    bottom:15px;
+    right:15px;
+    width:55px;
+    height:55px;
+    }
+    }
+    </style>
+    
+    <div id="pgdba-toggle">💬</div>
+    
+    <div id="pgdba-container">
+    <div id="pgdba-header">
+    AI Assistant
+    <button id="pgdba-theme">🌙</button>
+    </div>
+    
+    <div id="pgdba-robot">
+    <div class="pgdba-head">
+    <div class="pgdba-eye"></div>
+    <div class="pgdba-eye"></div>
+    </div>
+    <div class="pgdba-body"></div>
+    </div>
+    
+    <div id="pgdba-messages"></div>
+    
+    <div id="pgdba-input-area">
+    <input id="pgdba-input" placeholder="Ask something..." />
+    <button id="pgdba-send">Send</button>
+    </div>
+    </div>
+    
+    <script src="https://cdn.jsdelivr.net/npm/marked/marked.min.js"></script>
+    <script>
+    const widget=document.getElementById("pgdba-widget");
+    const toggle=document.getElementById("pgdba-toggle");
+    const container=document.getElementById("pgdba-container");
+    const send=document.getElementById("pgdba-send");
+    const input=document.getElementById("pgdba-input");
+    const messages=document.getElementById("pgdba-messages");
+    const robot=document.getElementById("pgdba-robot");
+    const theme=document.getElementById("pgdba-theme");
+    
+    /* Toggle */
+    toggle.onclick=()=>container.classList.toggle("open");
+    
+    /* Scoped Dark Mode */
+    theme.onclick=()=>{
+    widget.classList.toggle("dark");
+    localStorage.setItem("pgdba-theme",widget.classList.contains("dark"));
+    };
+    if(localStorage.getItem("pgdba-theme")==="true"){
+    widget.classList.add("dark");
+    }
+    
+    /* Memory */
+    messages.innerHTML=localStorage.getItem("pgdba-chat")||"";
+    
+    function saveChat(){
+    localStorage.setItem("pgdba-chat",messages.innerHTML);
+    }
+    
+    function addMessage(text,type){
+    const div=document.createElement("div");
+    div.className="pgdba-msg "+type;
+    div.innerHTML=text;
+    messages.appendChild(div);
+    messages.scrollTop=messages.scrollHeight;
+    saveChat();
+    return div;
+    }
+    
+    /* Send */
+    async function sendMessage(){
+    const question=input.value.trim();
+    if(!question)return;
+    
+    addMessage(question,"pgdba-user");
+    input.value="";
+    
+    const botMsg=addMessage("Thinking","pgdba-bot pgdba-thinking");
+    robot.classList.add("thinking");
+    
+    try{
+    const response=await fetch("https://api.pgdba.ml/chat",{
+    method:"POST",
+    headers:{"Content-Type":"application/json"},
+    body:JSON.stringify({question})
+    });
+    
+    if(!response.ok)throw new Error(response.status);
+    
+    const contentType=response.headers.get("content-type");
+    
+    if(contentType && contentType.includes("text/plain")){
+    const reader=response.body.getReader();
+    const decoder=new TextDecoder();
+    let fullText="";
+    botMsg.innerHTML="";
+    while(true){
+    const {done,value}=await reader.read();
+    if(done)break;
+    fullText+=decoder.decode(value);
+    botMsg.innerHTML=marked.parse(fullText);
+    messages.scrollTop=messages.scrollHeight;
+    }
+    }else{
+    const data=await response.json();
+    if(data.error||data.detail)throw new Error("429");
+    botMsg.innerHTML=marked.parse(data.answer||"No response.");
+    }
+    
+    }catch(error){
+    let msg="⚠️ Something went wrong.";
+    if(error.message.includes("429")){
+    msg="🚫 AI usage limit reached. Try later.";
+    }
+    botMsg.innerHTML=msg;
+    }
+    
+    botMsg.classList.remove("pgdba-thinking");
+    robot.classList.remove("thinking");
+    saveChat();
+    }
+    
+    send.onclick=sendMessage;
+    input.addEventListener("keypress",e=>{
+    if(e.key==="Enter")sendMessage();
+    });
+    </script>
+    
+    </div>
+    <!-- ===== PGDBA AI WIDGET END ===== -->
