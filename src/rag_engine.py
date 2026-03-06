@@ -33,7 +33,7 @@ embeddings = HuggingFaceEmbeddings(
     encode_kwargs={'normalize_embeddings': True}
 )
 vector_store = FAISS.load_local(config.VECTOR_DB_PATH, embeddings, allow_dangerous_deserialization=True)
-faiss_retriever = vector_store.as_retriever(search_kwargs={"k": 30})
+faiss_retriever = vector_store.as_retriever(search_kwargs={"k": 45})
 
 # 2️⃣ Load Saved Docs & Initialize BM25 (Keyword Search)
 with open(config.DOCS_PATH, 'rb') as f:
@@ -71,7 +71,7 @@ You are the official PGDBA Assistant. Answer the student's question accurately u
 
 INSTRUCTIONS:
 - If the exact answer isn't in the context, but related information is, provide the related information and state what is missing.
-- If the context does not contain the answer at all, state: "I don't have that information."
+- If the context does not contain the answer at all, state: "I don't have that information. and suggest the user about related information and ask them to check the website for more information."
 - Use bullet points for requirements, eligibility, or lists.
 
 CONTEXT:
@@ -104,5 +104,5 @@ def get_response(query: str):
     }
 
 if __name__ == "__main__":
-    response = get_response("What is the exact minimum CGPA required for an engineering graduate to apply?")
+    response = get_response("can you share the interview experience of salman?")
     print(f"\n🤖 Answer:\n{response['answer']}")

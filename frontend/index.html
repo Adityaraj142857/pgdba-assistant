@@ -1,30 +1,22 @@
-<!-- ===== PGDBA AI WIDGET START ===== -->
+<!-- ===== PGDBA AI WIDGET FINAL ===== -->
 <div id="pgdba-widget">
 
     <style>
-    #pgdba-widget{
-    all:initial;
-    font-family:system-ui,-apple-system;
-    }
+    #pgdba-widget{all:initial;font-family:system-ui,-apple-system}
+    #pgdba-widget *{box-sizing:border-box;font-family:inherit}
     
-    #pgdba-widget *{
-    box-sizing:border-box;
-    font-family:inherit;
-    }
-    
-    /* Theme Variables */
     #pgdba-widget{
     --bg:#ffffff;
-    --glass:rgba(255,255,255,0.65);
+    --glass:rgba(255,255,255,0.75);
     --text:#111827;
-    --bot:#f1f5ff;
+    --bot:#eef2ff;
     --user:linear-gradient(135deg,#6366f1,#8b5cf6);
     --border:linear-gradient(270deg,#6366f1,#9333ea,#06b6d4,#6366f1);
     }
     
     #pgdba-widget.dark{
     --bg:#0f172a;
-    --glass:rgba(30,41,59,0.65);
+    --glass:rgba(30,41,59,0.75);
     --text:#f1f5f9;
     --bot:#1e293b;
     }
@@ -44,12 +36,11 @@
     cursor:pointer;
     box-shadow:0 10px 30px rgba(0,0,0,.25);
     z-index:9999;
-    transition:.3s;
     color:white;
     font-size:24px;
+    transition:.3s;
     }
-    
-    #pgdba-toggle:hover{transform:scale(1.1);}
+    #pgdba-toggle:hover{transform:scale(1.1)}
     
     /* Container */
     #pgdba-container{
@@ -67,13 +58,11 @@
     display:flex;
     flex-direction:column;
     overflow:hidden;
-    z-index:9999;
+    z-index:9998;
     color:var(--text);
     }
     
-    #pgdba-container.open{
-    transform:translateX(0);
-    }
+    #pgdba-container.open{transform:translateX(0)}
     
     /* Animated Border */
     #pgdba-container::before{
@@ -92,7 +81,6 @@
     mask-composite:exclude;
     pointer-events:none;
     }
-    
     @keyframes borderFlow{
     0%{background-position:0% 50%}
     100%{background-position:100% 50%}
@@ -112,6 +100,7 @@
     border:none;
     cursor:pointer;
     font-size:18px;
+    color:inherit;
     }
     
     /* Robot */
@@ -120,49 +109,32 @@
     margin:0 auto;
     animation:breath 3s ease-in-out infinite;
     }
-    
     @keyframes breath{
     0%,100%{transform:scale(1)}
     50%{transform:scale(1.05)}
     }
-    
     .pgdba-head{
-    width:70px;
-    height:70px;
-    border-radius:50%;
+    width:70px;height:70px;border-radius:50%;
     background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    display:flex;
-    justify-content:center;
-    align-items:center;
+    display:flex;justify-content:center;align-items:center;
     }
-    
     .pgdba-eye{
-    width:10px;
-    height:10px;
-    background:white;
-    border-radius:50%;
-    margin:5px;
-    animation:blink 5s infinite;
+    width:10px;height:10px;background:white;border-radius:50%;
+    margin:5px;animation:blink 5s infinite;
     }
-    
     @keyframes blink{
     0%,90%,100%{transform:scaleY(1)}
     95%{transform:scaleY(.1)}
     }
-    
     .pgdba-body{
-    width:60px;
-    height:50px;
-    border-radius:15px;
+    width:60px;height:50px;border-radius:15px;
     background:linear-gradient(135deg,#4f46e5,#7c3aed);
     margin:5px auto;
     }
-    
     #pgdba-robot.thinking .pgdba-head{
     box-shadow:0 0 20px #8b5cf6;
     animation:spin 1s linear infinite;
     }
-    
     @keyframes spin{
     0%{transform:rotate(0)}
     100%{transform:rotate(360deg)}
@@ -170,41 +142,22 @@
     
     /* Messages */
     #pgdba-messages{
-    flex:1;
-    padding:15px;
-    overflow-y:auto;
-    font-size:14px;
+    flex:1;padding:15px;overflow-y:auto;font-size:14px;
     }
-    
     .pgdba-msg{
-    padding:10px 14px;
-    border-radius:15px;
-    margin-bottom:10px;
-    max-width:85%;
-    animation:fadeIn .3s ease;
-    word-wrap:break-word;
+    padding:10px 14px;border-radius:15px;margin-bottom:10px;
+    max-width:85%;animation:fadeIn .3s ease;word-wrap:break-word;
     }
-    
     @keyframes fadeIn{
     from{opacity:0;transform:translateY(10px)}
     to{opacity:1;transform:translateY(0)}
     }
-    
-    .pgdba-user{
-    background:var(--user);
-    color:white;
-    margin-left:auto;
-    }
-    
-    .pgdba-bot{
-    background:var(--bot);
-    }
-    
+    .pgdba-user{background:var(--user);color:white;margin-left:auto}
+    .pgdba-bot{background:var(--bot)}
     .pgdba-thinking::after{
     content:"...";
     animation:dots 1.5s infinite;
     }
-    
     @keyframes dots{
     0%{content:"."}
     33%{content:".."}
@@ -212,41 +165,24 @@
     }
     
     /* Input */
-    #pgdba-input-area{
-    display:flex;
-    padding:10px;
-    gap:10px;
-    }
-    
+    #pgdba-input-area{display:flex;padding:10px;gap:10px}
     #pgdba-input{
-    flex:1;
-    padding:10px;
-    border-radius:10px;
-    border:1px solid #ddd;
-    outline:none;
+    flex:1;padding:10px;border-radius:10px;
+    border:1px solid #ddd;outline:none;
     }
-    
     #pgdba-send{
-    padding:10px 14px;
-    border:none;
-    border-radius:10px;
+    padding:10px 14px;border:none;border-radius:10px;
     background:linear-gradient(135deg,#6366f1,#8b5cf6);
-    color:white;
-    cursor:pointer;
+    color:white;cursor:pointer;
     }
     
-    /* Mobile Compact Mode */
+    /* Mobile */
     @media(max-width:480px){
     #pgdba-container{
-    width:100%;
-    height:100%;
-    border-radius:0;
+    width:100%;height:100%;border-radius:0;
     }
     #pgdba-toggle{
-    bottom:15px;
-    right:15px;
-    width:55px;
-    height:55px;
+    bottom:15px;right:15px;width:55px;height:55px;
     }
     }
     </style>
@@ -255,8 +191,11 @@
     
     <div id="pgdba-container">
     <div id="pgdba-header">
-    AI Assistant
+    <span>AI Assistant</span>
+    <div>
     <button id="pgdba-theme">🌙</button>
+    <button id="pgdba-close">✕</button>
+    </div>
     </div>
     
     <div id="pgdba-robot">
@@ -280,16 +219,35 @@
     const widget=document.getElementById("pgdba-widget");
     const toggle=document.getElementById("pgdba-toggle");
     const container=document.getElementById("pgdba-container");
+    const closeBtn=document.getElementById("pgdba-close");
+    const theme=document.getElementById("pgdba-theme");
     const send=document.getElementById("pgdba-send");
     const input=document.getElementById("pgdba-input");
     const messages=document.getElementById("pgdba-messages");
     const robot=document.getElementById("pgdba-robot");
-    const theme=document.getElementById("pgdba-theme");
     
-    /* Toggle */
-    toggle.onclick=()=>container.classList.toggle("open");
+    /* Open / Close */
+    function openChat(){container.classList.add("open")}
+    function closeChat(){container.classList.remove("open")}
+    function toggleChat(){container.classList.toggle("open")}
     
-    /* Scoped Dark Mode */
+    toggle.addEventListener("click",e=>{
+    e.stopPropagation();
+    toggleChat();
+    });
+    
+    closeBtn.addEventListener("click",closeChat);
+    
+    /* Close on outside click */
+    document.addEventListener("click",function(e){
+    if(container.classList.contains("open")){
+    if(!container.contains(e.target) && !toggle.contains(e.target)){
+    closeChat();
+    }
+    }
+    });
+    
+    /* Dark Mode Scoped */
     theme.onclick=()=>{
     widget.classList.toggle("dark");
     localStorage.setItem("pgdba-theme",widget.classList.contains("dark"));
@@ -298,9 +256,8 @@
     widget.classList.add("dark");
     }
     
-    /* Memory */
+    /* Chat Memory */
     messages.innerHTML=localStorage.getItem("pgdba-chat")||"";
-    
     function saveChat(){
     localStorage.setItem("pgdba-chat",messages.innerHTML);
     }
@@ -375,4 +332,4 @@
     </script>
     
     </div>
-    <!-- ===== PGDBA AI WIDGET END ===== -->
+    <!-- ===== END ===== -->
