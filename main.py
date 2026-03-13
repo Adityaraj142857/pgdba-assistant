@@ -7,22 +7,26 @@ from typing import List
 
 from src.rag_engine import get_response
 
-app = FastAPI(title="PGDBA AI Assistant", description="RAG API for PGDBA Queries")
+app = FastAPI(
+    title="PGDBA AI Assistant",
+    description="Hybrid RAG API (BM25 + FAISS + Cross-Encoder Reranker) for PGDBA Queries",
+    version="2.0.0",
+)
 
-# -----------------------------
-# Enable CORS (for pgdba.ml / WordPress integration)
-# -----------------------------
+# ─────────────────────────────────────────────────────────────
+# CORS  (restrict origin in production)
+# ─────────────────────────────────────────────────────────────
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Restrict this to "https://pgdba.ml" when deploying to DigitalOcean
+    allow_origins=["*"],      # ← change to ["https://pgdba.ml"] on DigitalOcean
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
 )
 
-# -----------------------------
-# Request & Response Schemas
-# -----------------------------
+# ─────────────────────────────────────────────────────────────
+# Schemas
+# ─────────────────────────────────────────────────────────────
 class Query(BaseModel):
     question: str
 
@@ -30,20 +34,27 @@ class ResponseModel(BaseModel):
     answer: str
     sources: List[str]
 
-# -----------------------------
-# Chat Endpoint
-# -----------------------------
-# 🔥 FIX: Removed 'async' from def. Since Langchain's invoke() is blocking,
-# a standard 'def' tells FastAPI to run this in a separate background thread!
+# ─────────────────────────────────────────────────────────────
+# Endpoints
+# ─────────────────────────────────────────────────────────────
+@app.get("/")
+def root():
+    return {"message": "PGDBA AI Assistant is running 🚀", "version": "2.0.0"}
+
+@app.get("/health")
+def health():
+    return {"status": "ok"}
+
+
+# Using a standard (non-async) def here is intentional:
+# LangChain's .invoke() is blocking, so FastAPI automatically offloads
+# this to a thread-pool instead of blocking the event loop.
 @app.post("/chat", response_model=ResponseModel)
 def chat(query: Query):
+    if not query.question or not query.question.strip():
+        raise HTTPException(status_code=422, detail="Question cannot be empty.")
     try:
         result = get_response(query.question)
         return {"answer": result["answer"], "sources": result["sources"]}
     except Exception as e:
-        # Return a proper 500 error instead of a 200 OK with an error message
         raise HTTPException(status_code=500, detail=str(e))
-
-@app.get("/")
-def root():
-    return {"message": "PGDBA AI Assistant is running 🚀"}

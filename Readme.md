@@ -1,176 +1,218 @@
 # PGDBA Assistant 🎓
 
-AI-powered conversational assistant for PGDBA (Post Graduate Diploma in Business Analytics).
+An AI-powered conversational assistant for the **Post Graduate Diploma in Business Analytics (PGDBA)** — jointly offered by IIT Kharagpur, IIM Calcutta, and ISI Kolkata.
 
-Built using:
-- FastAPI
-- LangChain (RAG Architecture)
-- FAISS Vector Database
-- HuggingFace Embeddings (MiniLM)
-- Google Gemini 2.5 Flash
-
-This assistant retrieves official PGDBA information and generates accurate, context-aware responses.
+Built with a production-grade **Hybrid RAG** pipeline (BM25 + FAISS + Cross-Encoder Reranker) and served via a FastAPI backend.
 
 ---
 
 ## 🚀 Architecture
 
-Frontend (PGDBA.ml Website)
-        ↓
-FastAPI Backend (RAG API)
-        ↓
-Retriever (FAISS)
-        ↓
-HuggingFace Embeddings
-        ↓
+```
+Student Query
+     │
+     ▼
+FastAPI  (/chat endpoint)
+     │
+     ▼
+┌────────────────────────────────────────┐
+│         Hybrid Retriever               │
+│                                        │
+│  BM25 (keyword, case-insensitive)      │
+│       +                                │
+│  FAISS + BGE-large (semantic/dense)    │
+│       ↓                                │
+│  EnsembleRetriever (40% BM25, 60% FAISS│
+└────────────────────────────────────────┘
+     │
+     ▼
+Cross-Encoder Reranker
+(ms-marco-MiniLM-L-6-v2 → top 6 chunks)
+     │
+     ▼
 Gemini 2.5 Flash (LLM)
+     │
+     ▼
+Answer + Source URLs
+```
 
 ---
 
 ## 🧠 Key Features
 
-- Retrieval Augmented Generation (RAG)
-- Local embeddings (no embedding API limits)
-- Gemini 2.5 Flash for fast responses
-- FAISS for efficient similarity search
-- Modular architecture
-- Production-ready FastAPI backend
+| Feature | Detail |
+|---|---|
+| **Hybrid Search** | BM25 (exact keyword) + FAISS (semantic) combined via EnsembleRetriever |
+| **Case-insensitive BM25** | Custom preprocessor fixes proper-noun mismatches (e.g. `"aditya"` = `"Aditya"`) |
+| **MMR Retrieval** | Maximal Marginal Relevance reduces redundant chunks from FAISS |
+| **Cross-Encoder Reranking** | Re-scores hybrid candidates; keeps only the top 6 most relevant chunks |
+| **Local Embeddings** | BAAI/bge-large-en-v1.5 — no embedding API quota consumed |
+| **Gemini 2.5 Flash** | Fast, cost-effective LLM at temperature 0 for factual accuracy |
+| **Web Crawler** | Async crawler (aiohttp) with PDF + OCR support for ingestion |
+| **FastAPI Backend** | Production-ready REST API with CORS, error handling, and health endpoint |
 
 ---
 
 ## 📂 Project Structure
 
-# PGDBA Assistant 🎓
-
-AI-powered conversational assistant for PGDBA (Post Graduate Diploma in Business Analytics).
-
-Built using:
-- FastAPI
-- LangChain (RAG Architecture)
-- FAISS Vector Database
-- HuggingFace Embeddings (MiniLM)
-- Google Gemini 2.5 Flash
-
-This assistant retrieves official PGDBA information and generates accurate, context-aware responses.
-
----
-
-## 🚀 Architecture
-
-Frontend (PGDBA.ml Website)
-        ↓
-FastAPI Backend (RAG API)
-        ↓
-Retriever (FAISS)
-        ↓
-HuggingFace Embeddings
-        ↓
-Gemini 2.5 Flash (LLM)
-
----
-
-## 🧠 Key Features
-
-- Retrieval Augmented Generation (RAG)
-- Local embeddings (no embedding API limits)
-- Gemini 2.5 Flash for fast responses
-- FAISS for efficient similarity search
-- Modular architecture
-- Production-ready FastAPI backend
-
----
-
-## 📂 Project Structure
-
+```
 pgdba-assistant/
 │
-├── main.py # FastAPI app
-├── config.py # Config variables
-├── .env # Environment variables (not committed)
+├── main.py               # FastAPI application (REST API)
+├── config.py             # All configuration constants
+├── requirements.txt      # Python dependencies
+├── .env                  # API keys (not committed to git)
 │
 ├── src/
-│ ├── rag_engine.py # RAG pipeline logic
-│ └── ingestion.py # Vector store builder
+│   ├── rag_engine.py     # Full hybrid RAG pipeline
+│   └── ingestion.py      # Crawler output → FAISS + BM25 index builder
 │
 ├── data/
-│ ├── raw/ # Source text files
-│ └── faiss_index/ # Saved vector store
+│   ├── website_data.json # Raw crawled content
+│   ├── faiss_index/      # FAISS vector store
+│   └── docs.pkl          # Serialised LangChain Documents for BM25
 │
-└── requirements.txt
-
-
+├── crawler.py            # Async web crawler (HTML + PDF + OCR)
+├── evaluation.py         # BLEU + Ragas evaluation script
+└── endpoints.txt         # Seed URLs for the crawler
+```
 
 ---
 
-## ⚙️ Setup Instructions
+## ⚙️ Setup
 
-### 1️⃣ Clone Repository
+### 1. Clone the repository
 
+```bash
 git clone https://github.com/Adityaraj142857/pgdba-assistant.git
 cd pgdba-assistant
+```
 
+### 2. Create a virtual environment
 
----
-
-### 2️⃣ Create Virtual Environment
-
+```bash
 python3 -m venv venv
-source venv/bin/activate
+source venv/bin/activate       # Windows: venv\Scripts\activate
+```
 
+### 3. Install dependencies
 
----
-
-### 3️⃣ Install Dependencies
-
+```bash
 pip install -r requirements.txt
+```
 
+### 4. Configure environment variables
 
----
+Create a `.env` file in the project root:
 
-### 4️⃣ Add Environment Variables
-
-Create a `.env` file in root:
-
+```
 GOOGLE_API_KEY=your_gemini_api_key_here
+```
 
+### 5. Crawl the website (optional — skip if you already have `data/website_data.json`)
 
----
+```bash
+python crawler.py
+```
 
-### 5️⃣ Build Vector Store
+### 6. Build the vector index
 
-Run ingestion script once:
+Run once after crawling (or whenever new data is available):
 
+```bash
 python src/ingestion.py
+```
 
-This creates the FAISS index.
+This creates:
+- `data/faiss_index/` — dense vector store for semantic search
+- `data/docs.pkl` — serialised chunks for BM25 keyword search
 
----
+### 7. Start the API server
 
-### 6️⃣ Start API Server
-
+```bash
 uvicorn main:app --reload
+```
 
-API will run at:
-
-http://127.0.0.1:8000
-
-Swagger docs available at:
-
-http://127.0.0.1:8000/docs
+- API → `http://127.0.0.1:8000`
+- Swagger docs → `http://127.0.0.1:8000/docs`
+- Health check → `http://127.0.0.1:8000/health`
 
 ---
 
-## 🔌 API Usage
+## 🔌 API Reference
 
-### POST `/chat`
+### `POST /chat`
 
-**Request:**
+**Request body:**
+```json
+{ "question": "What is the PGDBA eligibility criteria?" }
+```
 
+**Response:**
 ```json
 {
-  "question": "What is PGDBA eligibility?"
+  "answer": "To be eligible for PGDBA, candidates must ...",
+  "sources": [
+    "https://pgdba.iitkgp.ac.in/admissions",
+    "https://www.iimcal.ac.in/programs/pgdba"
+  ]
 }
-Response:
-{
-  "answer": "..."
-}
+```
+
+### `GET /health`
+
+Returns `{ "status": "ok" }` — useful for uptime monitoring.
+
+---
+
+## 🐛 Known Fixes in v2
+
+| Issue | Root Cause | Fix |
+|---|---|---|
+| `"aditya"` query returned no results, `"Aditya"` did | `ingestion.py` lowercased stored text; BM25 tokeniser was case-sensitive against original query casing | Removed lowercasing from ingestion; added `preprocess_func=lambda t: t.lower().split()` to `BM25Retriever` |
+| Redundant retrieved chunks | FAISS similarity search returns near-duplicate passages | Switched FAISS retriever to **MMR** (`search_type="mmr"`) |
+| Evaluation used wrong model | `evaluation.py` hardcoded `gemini-1.5-flash` while `config.py` specifies `gemini-2.5-flash` | `evaluation.py` now reads `config.LLM_MODEL` |
+
+---
+
+## 📊 Evaluation
+
+Run the offline evaluation suite:
+
+```bash
+python evaluation.py
+```
+
+Produces `evaluation_results.csv` with per-question scores:
+
+| Metric | Description |
+|---|---|
+| `bleu_score` | n-gram overlap with ground truth (fast, offline) |
+| `faithfulness` | Is the answer grounded in the retrieved context? (Ragas) |
+| `answer_relevancy` | Does the answer address the question? (Ragas) |
+
+---
+
+## 🚢 Production Deployment (DigitalOcean)
+
+1. Replace `allow_origins=["*"]` in `main.py` with `["https://pgdba.ml"]`
+2. Set `GOOGLE_API_KEY` as an environment variable on the server
+3. Run with gunicorn + uvicorn workers:
+
+```bash
+gunicorn main:app -k uvicorn.workers.UvicornWorker --workers 2 --bind 0.0.0.0:8000
+```
+
+---
+
+## 🛠️ Tech Stack
+
+- **LangChain** — RAG orchestration
+- **FAISS** — Dense vector similarity search
+- **BGE-large-en-v1.5** — Local sentence embeddings (HuggingFace)
+- **BM25** — Keyword retrieval (`rank-bm25`)
+- **ms-marco-MiniLM-L-6-v2** — Cross-encoder reranker
+- **Gemini 2.5 Flash** — Response generation
+- **FastAPI** — REST API server
+- **trafilatura** — Web content extraction
+- **aiohttp** — Async web crawling
