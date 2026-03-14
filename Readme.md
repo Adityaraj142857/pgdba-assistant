@@ -191,8 +191,8 @@ Produces `evaluation_results.csv` with per-question scores:
 | `faithfulness` | Is the answer grounded in the retrieved context? (Ragas) |
 | `answer_relevancy` | Does the answer address the question? (Ragas) |
 
----------------- Result of evaluation.py -----------------
-
+--------------- Result of evaluation.py ----------------
+---
 ⚙️  Initialising evaluation components...
 
 🚀 Starting RAG Evaluation Pipeline
@@ -201,17 +201,12 @@ Produces `evaluation_results.csv` with per-question scores:
    ➤  What is the PGDBA selection process?
    ➤  What is the eligibility criteria for PGDBA?
 
-📐 Calculating BLEU scores...
-
-⚖️  Running Ragas metrics (faithfulness + answer_relevancy)...
-Evaluating: 100%|██████████████████████████████████████████████████████████████████████████████| 6/6 [01:47<00:00, 17.91s/it]
-
-✅ Results saved to 'evaluation_results.csv'
-
 ─────────────── 📊 Average Scores ───────────────
-bleu_score          0.013500
-faithfulness        0.979167
-answer_relevancy    0.903167
+---
+**bleu_score**         - 0.013500
+**faithfulness**       - 0.979167
+**answer_relevancy**   - 0.903167
+---
 ──────────────────────────────────────────────────
 
 
