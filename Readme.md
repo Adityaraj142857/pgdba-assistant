@@ -40,16 +40,18 @@ Answer + Source URLs
 
 ## 🧠 Key Features
 
-| Feature | Detail |
-|---|---|
-| **Hybrid Search** | BM25 (exact keyword) + FAISS (semantic) combined via EnsembleRetriever |
-| **Case-insensitive BM25** | Custom preprocessor fixes proper-noun mismatches (e.g. `"aditya"` = `"Aditya"`) |
-| **MMR Retrieval** | Maximal Marginal Relevance reduces redundant chunks from FAISS |
-| **Cross-Encoder Reranking** | Re-scores hybrid candidates; keeps only the top 6 most relevant chunks |
-| **Local Embeddings** | BAAI/bge-large-en-v1.5 — no embedding API quota consumed |
-| **Gemini 2.5 Flash** | Fast, cost-effective LLM at temperature 0 for factual accuracy |
-| **Web Crawler** | Async crawler (aiohttp) with PDF + OCR support for ingestion |
-| **FastAPI Backend** | Production-ready REST API with CORS, error handling, and health endpoint |
+
+| Feature                     | Detail                                                                          |
+| --------------------------- | ------------------------------------------------------------------------------- |
+| **Hybrid Search**           | BM25 (exact keyword) + FAISS (semantic) combined via EnsembleRetriever          |
+| **Case-insensitive BM25**   | Custom preprocessor fixes proper-noun mismatches (e.g. `"aditya"` = `"Aditya"`) |
+| **MMR Retrieval**           | Maximal Marginal Relevance reduces redundant chunks from FAISS                  |
+| **Cross-Encoder Reranking** | Re-scores hybrid candidates; keeps only the top 6 most relevant chunks          |
+| **Local Embeddings**        | BAAI/bge-large-en-v1.5 — no embedding API quota consumed                        |
+| **Gemini 2.5 Flash**        | Fast, cost-effective LLM at temperature 0 for factual accuracy                  |
+| **Web Crawler**             | Async crawler (aiohttp) with PDF + OCR support for ingestion                    |
+| **FastAPI Backend**         | Production-ready REST API with CORS, error handling, and health endpoint        |
+
 
 ---
 
@@ -124,6 +126,7 @@ python src/ingestion.py
 ```
 
 This creates:
+
 - `data/faiss_index/` — dense vector store for semantic search
 - `data/docs.pkl` — serialised chunks for BM25 keyword search
 
@@ -144,11 +147,13 @@ uvicorn main:app --reload
 ### `POST /chat`
 
 **Request body:**
+
 ```json
 { "question": "What is the PGDBA eligibility criteria?" }
 ```
 
 **Response:**
+
 ```json
 {
   "answer": "To be eligible for PGDBA, candidates must ...",
@@ -167,11 +172,13 @@ Returns `{ "status": "ok" }` — useful for uptime monitoring.
 
 ## 🐛 Known Fixes in v2
 
-| Issue | Root Cause | Fix |
-|---|---|---|
+
+| Issue                                                | Root Cause                                                                                             | Fix                                                                                                        |
+| ---------------------------------------------------- | ------------------------------------------------------------------------------------------------------ | ---------------------------------------------------------------------------------------------------------- |
 | `"aditya"` query returned no results, `"Aditya"` did | `ingestion.py` lowercased stored text; BM25 tokeniser was case-sensitive against original query casing | Removed lowercasing from ingestion; added `preprocess_func=lambda t: t.lower().split()` to `BM25Retriever` |
-| Redundant retrieved chunks | FAISS similarity search returns near-duplicate passages | Switched FAISS retriever to **MMR** (`search_type="mmr"`) |
-| Evaluation used wrong model | `evaluation.py` hardcoded `gemini-1.5-flash` while `config.py` specifies `gemini-2.5-flash` | `evaluation.py` now reads `config.LLM_MODEL` |
+| Redundant retrieved chunks                           | FAISS similarity search returns near-duplicate passages                                                | Switched FAISS retriever to **MMR** (`search_type="mmr"`)                                                  |
+| Evaluation used wrong model                          | `evaluation.py` hardcoded `gemini-1.5-flash` while `config.py` specifies `gemini-2.5-flash`            | `evaluation.py` now reads `config.LLM_MODEL`                                                               |
+
 
 ---
 
@@ -185,14 +192,16 @@ python evaluation.py
 
 Produces `evaluation_results.csv` with per-question scores:
 
-| Metric | Description |
-|---|---|
-| `bleu_score` | n-gram overlap with ground truth (fast, offline) |
-| `faithfulness` | Is the answer grounded in the retrieved context? (Ragas) |
-| `answer_relevancy` | Does the answer address the question? (Ragas) |
+
+| Metric             | Description                                              |
+| ------------------ | -------------------------------------------------------- |
+| `bleu_score`       | n-gram overlap with ground truth (fast, offline)         |
+| `faithfulness`     | Is the answer grounded in the retrieved context? (Ragas) |
+| `answer_relevancy` | Does the answer address the question? (Ragas)            |
+
 
 --------------- Result of evaluation.py ----------------
----
+
 ⚙️  Initialising evaluation components...
 
 🚀 Starting RAG Evaluation Pipeline
@@ -202,14 +211,11 @@ Produces `evaluation_results.csv` with per-question scores:
    ➤  What is the eligibility criteria for PGDBA?
 
 ─────────────── 📊 Average Scores ───────────────
----
-**bleu_score**         - 0.013500
-**faithfulness**       - 0.979167
-**answer_relevancy**   - 0.903167
----
+
+- **bleu_score**               -   0.013500
+- **faithfulness**              -   0.979167
+- **answer_relevancy**   -   0.903167  
 ──────────────────────────────────────────────────
-
-
 
 ---
 
@@ -236,3 +242,4 @@ gunicorn main:app -k uvicorn.workers.UvicornWorker --workers 2 --bind 0.0.0.0:80
 - **FastAPI** — REST API server
 - **trafilatura** — Web content extraction
 - **aiohttp** — Async web crawling
+
