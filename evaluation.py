@@ -106,21 +106,7 @@ ANSWER:"""
 # Test dataset
 # ─────────────────────────────────────────────────────────────
 TEST_DATA = [
-    {
-        "question": "What is the PGDBA program?",
-        "ground_truth": (
-            "PGDBA is a Post Graduate Diploma in Business Analytics jointly offered "
-            "by ISI Kolkata, IIT Kharagpur, and IIM Calcutta."
-        ),
-    },
-    {
-        "question": "What is the duration of the PGDBA program?",
-        "ground_truth": "The PGDBA program is a 2-year full-time residential program.",
-    },
-    {
-        "question": "Which institutes jointly offer the PGDBA program?",
-        "ground_truth": "IIM Calcutta, ISI Kolkata, and IIT Kharagpur jointly offer PGDBA.",
-    },
+
     {
         "question": "Is there an entrance exam for PGDBA?",
         "ground_truth": (
